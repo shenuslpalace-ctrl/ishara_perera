@@ -484,7 +484,7 @@ dialog::backdrop { background: rgba(0,0,0,.7); backdrop-filter: blur(3px); }
     <div class="batch">
       <div>
         <span class="kicker">New batch open</span>
-        <h2 class="si">2027 A/L නව පන්ති ආරම්භ වන දින</h2>
+        <h2 class="si">2028 A/L නව පන්ති ආරම්භ වන දින</h2>
         <p style="color:var(--muted)">Seats are limited in every centre. Register early to get the first month's tute pack free.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           <button class="btn" data-open="register">Register Now</button>
@@ -502,7 +502,7 @@ dialog::backdrop { background: rgba(0,0,0,.7); backdrop-filter: blur(3px); }
     <div class="sec-head">
       <span class="kicker">Time table</span>
       <h2 class="si">පන්ති කාලසටහන</h2>
-      <p>Choose your grade to see all physical and online class times.</p>
+      <p>Choose your exam year to see all physical and online class times.</p>
     </div>
     <div class="filter-tabs" role="tablist" id="ttTabs"></div>
     <div class="tt-grid" id="ttGrid"></div>
@@ -654,7 +654,7 @@ dialog::backdrop { background: rgba(0,0,0,.7); backdrop-filter: blur(3px); }
    ========================================================= */
 const WHATSAPP = "94789945430";   // your WhatsApp number (country code, no +)
 
-const GRADES = ["2027 A/L", "2028 A/L","10"];
+const GRADES = ["2027 A/L (THEORY)","2027 A/L (REVISION)", "2028 A/L (THEORY)"];
 const GRADE_COLORS = {
   "2027 A/L": "linear-gradient(135deg,#7C3AED,#2F7BFF)", "07": "linear-gradient(135deg,#0EA5E9,#22D3EE)",
   "2028 A/L": "linear-gradient(135deg,#059669,#22D3EE)", "09": "linear-gradient(135deg,#F59E0B,#EF4444)",
@@ -668,42 +668,35 @@ const CLASSES = [
 ];
 
 const NEW_BATCH = [
-  { place:"Online (Zoom)",  date:"Oct 05 (Sunday) – 8.00 a.m." },
-  { place:"Colombo",        date:"Oct 06 (Monday) – 3.30 p.m." },
-  { place:"Gampaha",        date:"Oct 08 (Wednesday) – 2.30 p.m." },
-  { place:"Kurunegala",     date:"Oct 10 (Friday) – 3.00 p.m." },
-  { place:"Kandy",          date:"Oct 11 (Saturday) – 8.00 a.m." }
+  { place:"Online (Zoom)",  date:"බදාදා 8.30-10.30 pm" },
+  { place:"සමාදි - අවිස්සාවේල්ල",       date:"ඉරිදා උදේ 8.30-10.30" },
+  { place:"සියෝපෙන් - නිට්ටබුව",        date:"සෙනසුරාදා උදේ 10.30-1.00" },
 ];
 
 // Timetable: one list per grade. online:true shows the online icon.
 const TIMETABLE = {
-  "2027 A/L": [ { place:"Online (Zoom)", day:"Sunday", time:"3.30 p.m – 5.30 p.m", online:true },
-          { place:"Colombo – Main Hall", day:"Saturday", time:"8.00 a.m – 10.00 a.m" } ],
-  "2028 A/L": [ { place:"Online (Zoom)", day:"Monday", time:"5.30 p.m – 7.30 p.m", online:true },
-          { place:"Gampaha", day:"Saturday", time:"10.30 a.m – 12.30 p.m" } ],
-  "08": [ { place:"Online (Zoom)", day:"Tuesday", time:"5.30 p.m – 7.30 p.m", online:true },
-          { place:"Colombo – Main Hall", day:"Sunday", time:"10.30 a.m – 12.30 p.m" } ],
-  "09": [ { place:"Online (Zoom)", day:"Wednesday", time:"6.00 p.m – 8.00 p.m", online:true },
-          { place:"Kurunegala", day:"Friday", time:"3.00 p.m – 5.00 p.m" },
-          { place:"Gampaha", day:"Sunday", time:"1.30 p.m – 3.30 p.m" } ],
-  "10": [ { place:"Online (Zoom)", day:"Thursday", time:"6.00 p.m – 8.30 p.m", online:true },
-          { place:"Colombo – Main Hall", day:"Saturday", time:"2.00 p.m – 4.30 p.m" },
-          { place:"Kandy", day:"Saturday", time:"8.00 a.m – 10.30 a.m" },
-          { place:"Gampaha", day:"Sunday", time:"8.00 a.m – 10.30 a.m" } ],
-  "11": [ { place:"Online (Zoom)", day:"Friday", time:"6.30 p.m – 9.00 p.m", online:true },
-          { place:"Online Revision (English)", day:"Sunday", time:"8.00 a.m – 11.00 a.m", online:true },
-          { place:"Colombo – Main Hall", day:"Sunday", time:"1.00 p.m – 4.00 p.m" },
-          { place:"Kurunegala", day:"Saturday", time:"1.00 p.m – 4.00 p.m" },
-          { place:"Kandy", day:"Sunday", time:"8.00 a.m – 11.00 a.m" } ]
+  "2027 A/L (THEORY)": [ { place:"Online (Theory)", day:"බදාදා", time:"6.00-8.00 pm", online:true },
+          { place:"සමාදි - අවිස්සාවේල්ල (Theory) ", day:"ඉරිදා", time:"12.00-3.00 pm" },
+          { place:"සියෝපෙන් - නිට්ටබුව (Theory) ", day:"සෙනසුරාදා", time:"08.30-10.30 am" } ],
+  "2027 A/L (REVISION)": [ { place:"Online (Revision)", day:"සිකුරාදා", time:"6.00-8.00 pm", online:true },
+          { place:"සමාදි - අවිස්සාවේල්ල (Revision) ", day:"අග", time:"08.30-5.00 pm" },
+          { place:"ගම්පහ - සැසික් (Revision) ", day:"බ්‍රහස්පතින්දා", time:"08.30-5.00 pm" }],
+  "2028 A/L (THEORY)":  [ { place:"Online (Theory)", day:"බදාදා", time:"8.30-10.30 pm", online:true },
+          { place:"සමාදි - අවිස්සාවේල්ල (Theory) ", day:"ඉරිදා", time:"8.00-10.30 am" },
+          { place:"සියෝපෙන් - නිට්ටබුව (Theory) ", day:"සෙනසුරාදා", time:"10.30-1.00 am" } ]
 };
 
 // FREE LESSONS
-// youtube: paste the full YouTube link. The video plays inside the popup.
+// youtube: paste the full YouTube link between the quotes, for example:
+//          youtube:"https://www.youtube.com/watch?v=abcdefghijk"
+//          youtube:"https://youtu.be/abcdefghijk"
+//          The video then plays inside the popup.
+//          Leave it as "" and the popup shows "Video coming soon".
 // img:     your own thumbnail in images/lessons/. If you leave img empty,
 //          the YouTube thumbnail is used automatically.
 const LESSONS = [
-  { grade:"2027 A/L", title:"චලිතය (Motion & Kinematics)", img:"images/lessons/motion.jpg",
-    youtube:"", dur:"24:10", views:"12K",
+  { grade:"2027 A/L", title:"චලිතය (Motion & Kinematics)", img:"",
+    youtube:"https://www.youtube.com/live/PRbbBQt5sD8?si=ZZVDqlScbY2dzqWU", dur:"24:10", views:"12K",
     points:["Distance, displacement and speed","Velocity–time graphs","Equations of motion","Past paper questions"] },
   { grade:"2027 A/L", title:"ධාරා විද්‍යුතය (Current Electricity)", img:"images/lessons/electricity.jpg",
     youtube:"", dur:"31:45", views:"9.8K",
@@ -790,7 +783,9 @@ function renderTimetable() {
 /* ---------- Free lessons ---------- */
 let lessonGrade = "All";
 function renderLessons() {
-  makeTabs($("lessonTabs"), [["All","All"], ...GRADES.map(g => [g, g])], lessonGrade,
+  // Tabs come from the grades used in LESSONS, so every tab shows its videos
+  const lessonGrades = [...new Set(LESSONS.map(l => l.grade))];
+  makeTabs($("lessonTabs"), [["All","All"], ...lessonGrades.map(g => [g, g])], lessonGrade,
     (v) => { lessonGrade = v; renderLessons(); });
   const list = LESSONS.filter(l => lessonGrade === "All" || l.grade === lessonGrade);
   $("videoGrid").innerHTML = list.length ? list.map(l => `
