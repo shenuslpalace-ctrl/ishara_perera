@@ -808,7 +808,7 @@ $("videoGrid").addEventListener("click", (e) => {
     ? `<div class="player"><iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" title="${l.title}"
          allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>`
     : `<div class="thumb" style="--b:${GRADE_COLORS[l.grade] || "var(--grad)"};border-radius:14px;margin-bottom:18px;overflow:hidden">
-         ${pic(lessonThumb(l), l.title)}<span class="soon">Video coming soon</span></div>`;
+         ${pic(lessonThumb(l), l.title)}</div>`;
   $("lessonBody").innerHTML = `
     ${media}
     <h3 class="si" style="font-size:1.4rem">${l.title}</h3>
