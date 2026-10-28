@@ -695,7 +695,7 @@ const TIMETABLE = {
 // img:     your own thumbnail in images/lessons/. If you leave img empty,
 //          the YouTube thumbnail is used automatically.
 const LESSONS = [
-  { grade:"2027 A/L", title:"චලිතය (Motion & Kinematics)", img:"",
+  { grade:"2027 A/L", title:"චලිතය (Motion & Kinematics)", img:"images/lessons/motion.jpg",
     youtube:"https://www.youtube.com/live/PRbbBQt5sD8?si=ZZVDqlScbY2dzqWU", dur:"24:10", views:"12K",
     points:["Distance, displacement and speed","Velocity–time graphs","Equations of motion","Past paper questions"] },
   { grade:"2027 A/L", title:"ධාරා විද්‍යුතය (Current Electricity)", img:"images/lessons/electricity.jpg",
@@ -803,12 +803,19 @@ $("videoGrid").addEventListener("click", (e) => {
   if (!b) return;
   const l = LESSONS[b.dataset.lesson];
   const id = ytId(l.youtube);
+  // Opened as a file on the computer (not from a website): YouTube blocks the player,
+  // so open the video straight on YouTube instead
+  if (id && location.protocol === "file:") {
+    window.open(`https://www.youtube.com/watch?v=${id}`, "_blank");
+    return;
+  }
   // With a YouTube link the video plays here; without one, the thumbnail is shown
   const media = id
-    ? `<div class="player"><iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" title="${l.title}"
-         allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>`
+    ? `<div class="player"><iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1" title="${l.title}"
+         referrerpolicy="strict-origin-when-cross-origin"
+         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`
     : `<div class="thumb" style="--b:${GRADE_COLORS[l.grade] || "var(--grad)"};border-radius:14px;margin-bottom:18px;overflow:hidden">
-         ${pic(lessonThumb(l), l.title)}</div>`;
+         ${pic(lessonThumb(l), l.title)}<span class="soon">Video coming soon</span></div>`;
   $("lessonBody").innerHTML = `
     ${media}
     <h3 class="si" style="font-size:1.4rem">${l.title}</h3>
