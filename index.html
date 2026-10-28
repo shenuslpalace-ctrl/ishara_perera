@@ -691,7 +691,7 @@ const TIMETABLE = {
 //          youtube:"https://www.youtube.com/watch?v=abcdefghijk"
 //          youtube:"https://youtu.be/abcdefghijk"
 //          The video then plays inside the popup.
-//          Leave it as "" and the popup shows "Video coming soon".
+//          Leave it as "" and the popup shows only the thumbnail.
 // img:     your own thumbnail in images/lessons/. If you leave img empty,
 //          the YouTube thumbnail is used automatically.
 const LESSONS = [
@@ -740,10 +740,10 @@ const lkr = (n) => "LKR " + n.toLocaleString("en-LK");
 const pic = (src, alt = "") => src
   ? `<img class="pic" src="${src}" alt="${alt}" loading="lazy" onload="this.parentElement.classList.add('has-img')" onerror="this.remove()">`
   : "";
-// Gets the video ID from any YouTube link (watch, youtu.be, shorts, embed)
+// Gets the video ID from any YouTube link (watch, youtu.be, shorts, embed, live)
 const ytId = (url) => {
   if (!url) return "";
-  const m = url.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);
+  const m = url.match(/(?:youtu\.be\/|v=|shorts\/|embed\/|live\/)([\w-]{11})/);
   return m ? m[1] : (/^[\w-]{11}$/.test(url) ? url : "");
 };
 // Thumbnail: your own image first, otherwise the YouTube thumbnail
@@ -815,7 +815,7 @@ $("videoGrid").addEventListener("click", (e) => {
          referrerpolicy="strict-origin-when-cross-origin"
          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`
     : `<div class="thumb" style="--b:${GRADE_COLORS[l.grade] || "var(--grad)"};border-radius:14px;margin-bottom:18px;overflow:hidden">
-         ${pic(lessonThumb(l), l.title)}<span class="soon">Video coming soon</span></div>`;
+         ${pic(lessonThumb(l), l.title)}</div>`;
   $("lessonBody").innerHTML = `
     ${media}
     <h3 class="si" style="font-size:1.4rem">${l.title}</h3>
