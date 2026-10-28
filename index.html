@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SW Maths Academy | Sachith Wijesinghe – Grade 6–11 Mathematics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+Sinhala:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ================= COLOURS ================= */
+:root {
+  --bg: #050B1F;
+  --bg-2: #0B1433;
+  --card: #111C44;
+  --line: rgba(255,255,255,.09);
+  --text: #F2F5FF;
+  --muted: #9AA6C8;
+  --blue: #2F7BFF;
+  --cyan: #22D3EE;
+  --gold: #FFC53D;
+  --green: #25D366;
+  --grad: linear-gradient(135deg, #2F7BFF 0%, #22D3EE 100%);
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+/* This site is dark by design; light mode keeps the same dark look on purpose */
+:root[data-theme="light"], :root[data-theme="dark"] { color-scheme: dark; }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 80px); }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: "Outfit", "Noto Sans Sinhala", "Segoe UI", system-ui, sans-serif;
+  line-height: 1.6; overflow-x: hidden;
+}
+.si { font-family: "Noto Sans Sinhala", "Iskoola Pota", sans-serif; }
+h1, h2, h3, h4 { margin: 0 0 .5em; line-height: 1.2; }
+p { margin: 0 0 1em; }
+a { color: inherit; text-decoration: none; }
+img, svg { max-width: 100%; }
+:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+section { padding: 90px 0; position: relative; }
+.sec-head { text-align: center; max-width: 680px; margin: 0 auto 48px; }
+.sec-head h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 800; }
+.sec-head p { color: var(--muted); }
+.kicker { color: var(--cyan); font-weight: 600; letter-spacing: .04em; margin-bottom: 8px; display: block; }
+
+/* ================= BUTTONS ================= */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 26px; border-radius: 999px; font: 600 1rem "Outfit", sans-serif;
+  border: 0; cursor: pointer; color: #fff; background: var(--grad);
+  box-shadow: 0 10px 30px -10px rgba(47,123,255,.7); transition: transform .2s, box-shadow .2s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 14px 34px -10px rgba(47,123,255,.9); }
+.btn.outline { background: transparent; border: 1.5px solid var(--line); box-shadow: none; }
+.btn.outline:hover { border-color: var(--cyan); }
+.btn.wa { background: var(--green); box-shadow: 0 10px 30px -10px rgba(37,211,102,.7); }
+.btn.small { padding: 9px 18px; font-size: .92rem; }
+
+/* ================= TOP BAR + HEADER ================= */
+.topbar { background: #020616; font-size: .88rem; color: var(--muted); border-bottom: 1px solid var(--line); }
+.topbar .wrap { display: flex; justify-content: space-between; align-items: center; height: 40px; gap: 12px; }
+.topbar .socials { display: flex; gap: 14px; }
+.topbar a:hover { color: var(--cyan); }
+.hot { color: var(--gold); font-weight: 600; }
+
+header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: rgba(5,11,31,.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line);
+}
+.nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.35rem; }
+.logo-badge { width: 42px; height: 42px; border-radius: 12px; background: var(--grad); display: grid; place-items: center; font-size: 1.2rem; }
+.logo-img { height: 56px; width: auto; display: block; }
+.foot-logo { height: 80px; }
+.logo small { display: block; font-weight: 500; font-size: .75rem; color: var(--muted); margin-top: -4px; }
+.menu { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; align-items: center; }
+.menu > li > a, .menu > li > button { font-weight: 500; color: var(--text); background: none; border: 0; font: 500 1rem "Outfit", sans-serif; cursor: pointer; padding: 6px 0; }
+.menu > li > a:hover, .menu > li > button:hover { color: var(--cyan); }
+.dropdown { position: relative; }
+.dropdown-list {
+  position: absolute; top: 100%; left: -16px; min-width: 170px; list-style: none; padding: 10px; margin: 8px 0 0;
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px; display: none;
+}
+.dropdown:hover .dropdown-list, .dropdown:focus-within .dropdown-list { display: block; }
+.dropdown-list a { display: block; padding: 8px 12px; border-radius: 8px; }
+.dropdown-list a:hover { background: rgba(255,255,255,.06); color: var(--cyan); }
+.burger { display: none; background: none; border: 0; color: var(--text); cursor: pointer; padding: 8px; }
+
+/* ================= HERO ================= */
+.hero { padding: 60px 0 40px; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; width: 700px; height: 700px; right: -200px; top: -150px;
+  background: radial-gradient(circle, rgba(47,123,255,.35), transparent 65%); pointer-events: none;
+}
+.hero::after {
+  content: ""; position: absolute; width: 500px; height: 500px; left: -200px; bottom: -200px;
+  background: radial-gradient(circle, rgba(34,211,238,.18), transparent 65%); pointer-events: none;
+}
+.hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; position: relative; z-index: 1; }
+.pill {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 999px;
+  background: rgba(255,197,61,.12); border: 1px solid rgba(255,197,61,.35); color: var(--gold); font-weight: 600; font-size: .92rem;
+}
+.pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); animation: pulse 1.6s infinite; }
+@keyframes pulse { 50% { opacity: .3; } }
+.hero h1 { font-size: clamp(2.3rem, 5.5vw, 4rem); font-weight: 800; margin: 18px 0 14px; }
+.hero h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero .sub { font-size: 1.15rem; color: var(--muted); max-width: 52ch; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 36px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 560px; }
+.stat { background: rgba(255,255,255,.04); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+.stat strong { display: block; font-size: 1.9rem; font-weight: 800; color: var(--gold); line-height: 1.1; }
+.stat span { font-size: .88rem; color: var(--muted); }
+
+.teacher-visual { position: relative; display: flex; justify-content: center; }
+.teacher-ring {
+  width: min(460px, 90%); aspect-ratio: 1; border-radius: 50%; position: relative;
+  background: radial-gradient(circle at 50% 60%, #1E3A8A 0%, #0B1433 70%); border: 2px solid rgba(47,123,255,.4);
+  box-shadow: 0 0 80px -10px rgba(47,123,255,.6); overflow: hidden;
+}
+.teacher-ring svg, .teacher-ring img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 88%; }
+.float-card {
+  position: absolute; background: rgba(17,28,68,.92); backdrop-filter: blur(8px); border: 1px solid var(--line);
+  border-radius: 16px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; font-size: .9rem;
+}
+.float-card b { display: block; font-size: 1.05rem; }
+.float-card .ic { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 1.2rem; }
+.fc-1 { top: 12%; left: 0; } .fc-1 .ic { background: rgba(255,197,61,.18); }
+.fc-2 { bottom: 12%; right: 0; } .fc-2 .ic { background: rgba(37,211,102,.18); }
+
+/* ================= MARQUEE ================= */
+.marquee { background: var(--grad); padding: 14px 0; overflow: hidden; white-space: nowrap; font-weight: 700; color: #03122E; }
+.marquee-track { display: inline-flex; gap: 48px; animation: scroll 30s linear infinite; }
+@keyframes scroll { to { transform: translateX(-50%); } }
+
+/* ================= TABS ================= */
+.filter-tabs { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
+.tab {
+  padding: 10px 20px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-2);
+  color: var(--text); font: 600 .95rem "Outfit", "Noto Sans Sinhala", sans-serif; cursor: pointer;
+}
+.tab[aria-selected="true"] { background: var(--grad); border-color: transparent; }
+.price { font-size: 1.3rem; font-weight: 800; }
+
+/* ================= NEW BATCH ================= */
+.batch { background: linear-gradient(135deg, #0F2A6B 0%, #081436 100%); border: 1px solid rgba(47,123,255,.35); border-radius: 28px; padding: 44px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 36px; align-items: center; }
+.batch h2 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 800; }
+.batch-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.batch-list li { display: flex; justify-content: space-between; gap: 12px; background: rgba(255,255,255,.05); border-radius: 12px; padding: 12px 16px; }
+.batch-list b { color: var(--gold); white-space: nowrap; }
+
+/* ================= TIMETABLE ================= */
+.tt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.tt-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; gap: 14px; }
+.tt-icon { width: 48px; height: 48px; flex-shrink: 0; border-radius: 14px; display: grid; place-items: center; font-size: 1.4rem; background: rgba(47,123,255,.15); }
+.tt-card.online .tt-icon { background: rgba(34,211,238,.15); }
+.tt-card h4 { margin: 0 0 2px; font-size: 1.05rem; }
+.tt-card .when { color: var(--gold); font-weight: 600; }
+.tt-card .where { color: var(--muted); font-size: .9rem; }
+.tt-note { text-align: center; color: var(--muted); margin-top: 26px; font-size: .95rem; }
+
+/* ================= TUTORIALS / VIDEOS ================= */
+.video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
+.video { display: flex; flex-direction: column; justify-content: flex-start; background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; cursor: pointer; text-align: left; color: var(--text); padding: 0; font: inherit; }
+.thumb { aspect-ratio: 16/9; position: relative; display: grid; place-items: center; background: var(--b); }
+.thumb .t { position: absolute; left: 14px; bottom: 12px; right: 60px; font-weight: 800; font-size: 1.15rem; line-height: 1.2; }
+.play { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,.95); display: grid; place-items: center; transition: transform .2s; }
+.play::after { content: ""; border-left: 18px solid #E11D48; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
+.video:hover .play { transform: scale(1.1); }
+.dur { position: absolute; right: 10px; bottom: 10px; background: rgba(0,0,0,.75); border-radius: 6px; padding: 2px 8px; font-size: .8rem; }
+.video-info { padding: 14px 16px 16px; }
+.video-info h4 { font-size: 1rem; margin-bottom: 4px; }
+.video-info span { color: var(--muted); font-size: .88rem; }
+
+.player { position: relative; aspect-ratio: 16/9; border-radius: 14px; overflow: hidden; margin-bottom: 18px; background: #000; }
+.player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.soon { position: absolute; right: 12px; top: 12px; z-index: 1; background: rgba(0,0,0,.75); padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 600; }
+#lessonDlg { max-width: 760px; }
+
+/* ================= PHOTOS FROM images/ FOLDER ================= */
+.pic { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+.thumb.has-img .t { display: none; }
+/* With a thumbnail image, the play button sits in the corner so it doesn't cover the title */
+.thumb.has-img .play { position: absolute; top: 10px; right: 10px; width: 42px; height: 42px; opacity: .9; }
+.thumb.has-img .play::after { border-left-width: 14px; border-top-width: 9px; border-bottom-width: 9px; margin-left: 4px; }
+.video:hover .thumb.has-img .play { opacity: 1; }
+.thumb .play { position: relative; z-index: 1; }
+.thumb .dur { z-index: 1; }
+.cover { position: relative; overflow: hidden; }
+.cover.has-img > :not(img) { visibility: hidden; }
+.avatar { position: relative; overflow: hidden; }
+
+/* ================= STORE ================= */
+.store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+.book { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px; display: flex; flex-direction: column; }
+.cover { aspect-ratio: 3/4; border-radius: 10px; background: var(--b); padding: 16px; display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 14px; box-shadow: inset 8px 0 0 rgba(0,0,0,.2); }
+.cover b { font-size: 1.25rem; line-height: 1.2; }
+.cover small { opacity: .8; }
+.book h4 { font-size: 1rem; margin-bottom: 4px; }
+.book-sub { color: var(--muted); font-size: .88rem; margin-bottom: 6px; }
+.cover.has-img { box-shadow: 0 14px 30px -12px rgba(0,0,0,.7); transition: transform .25s; }
+.book:hover .cover.has-img { transform: translateY(-4px) rotate(-1deg); }
+.book .price { font-size: 1.1rem; margin-bottom: 12px; color: var(--gold); }
+.book .btn { margin-top: auto; }
+.cart-fab {
+  position: fixed; right: 20px; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); z-index: 40;
+  background: var(--card); border: 1px solid var(--line); color: var(--text); border-radius: 999px;
+  padding: 12px 18px; font: 600 .95rem "Outfit", sans-serif; cursor: pointer; display: none; align-items: center; gap: 8px;
+}
+.cart-fab.show { display: inline-flex; }
+.cart-count { background: var(--gold); color: #000; border-radius: 999px; padding: 0 8px; font-size: .85rem; }
+
+/* ================= RESULTS ================= */
+.results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.result { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+.result-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--b); display: grid; place-items: center; font-weight: 800; }
+.result-top span { color: var(--muted); font-size: .88rem; display: block; }
+.grade-a { margin-left: auto; background: rgba(255,197,61,.15); color: var(--gold); font-weight: 800; border-radius: 10px; padding: 6px 12px; font-size: 1.1rem; }
+.result p { color: var(--muted); margin: 0; font-size: .95rem; }
+
+/* ================= ABOUT ================= */
+.about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: center; }
+.about-img { border-radius: 28px; aspect-ratio: 4/5; background: linear-gradient(160deg, #1E3A8A, #0B1433); border: 1px solid var(--line); position: relative; overflow: hidden; }
+.about-img img { position: absolute; inset: auto 0 0 0; width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
+.about-img svg { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 90%; }
+.check-list { list-style: none; padding: 0; margin: 20px 0 28px; display: grid; gap: 12px; }
+.check-list li { display: flex; gap: 12px; }
+.check-list li::before { content: "✓"; flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: rgba(37,211,102,.15); color: var(--green); display: grid; place-items: center; font-weight: 800; font-size: .85rem; }
+
+/* ================= CTA + FOOTER ================= */
+.cta { text-align: center; background: var(--grad); border-radius: 28px; padding: 56px 24px; color: #03122E; }
+.cta h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; }
+.cta p { font-size: 1.1rem; }
+.cta .btn.wa { color: #fff; }
+footer { background: #020616; border-top: 1px solid var(--line); padding: 60px 0 24px; margin-top: 90px; color: var(--muted); }
+.foot-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 32px; }
+footer h4 { color: var(--text); margin-bottom: 14px; }
+footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+footer a:hover { color: var(--cyan); }
+.copy { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: .9rem; }
+
+.wa-float {
+  position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 40;
+  width: 60px; height: 60px; border-radius: 50%; background: var(--green); display: grid; place-items: center;
+  box-shadow: 0 10px 30px -6px rgba(37,211,102,.7);
+}
+
+/* ================= DIALOG ================= */
+dialog { border: 1px solid var(--line); border-radius: 22px; padding: 0; width: calc(100% - 32px); max-width: 520px; background: var(--bg-2); color: var(--text); }
+dialog::backdrop { background: rgba(0,0,0,.7); backdrop-filter: blur(3px); }
+.dlg { padding: 28px; }
+.dlg-close { float: right; background: rgba(255,255,255,.08); border: 0; color: var(--text); width: 36px; height: 36px; border-radius: 50%; font-size: 1.3rem; cursor: pointer; }
+.dlg ol, .dlg ul { padding-left: 20px; color: var(--muted); }
+.dlg li { margin-bottom: 6px; }
+.cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); gap: 10px; }
+.qty { display: flex; align-items: center; gap: 8px; }
+.qty button { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--text); cursor: pointer; }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-weight: 600; margin-bottom: 6px; font-size: .95rem; }
+.field input, .field select { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: inherit; }
+.err { color: #FF7A7A; font-size: .85rem; min-height: 1.2em; display: block; margin-top: 4px; }
+
+/* ================= REVEAL (one page-load moment) ================= */
+.hero .reveal { opacity: 0; transform: translateY(18px); animation: rise .7s forwards; }
+.hero .reveal:nth-child(2) { animation-delay: .1s; } .hero .reveal:nth-child(3) { animation-delay: .2s; }
+.hero .reveal:nth-child(4) { animation-delay: .3s; } .hero .reveal:nth-child(5) { animation-delay: .4s; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 960px) {
+  .hero-grid, .batch, .about-grid { grid-template-columns: 1fr; }
+  .teacher-visual { order: -1; }
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .burger { display: block; }
+  .menu {
+    display: none; position: absolute; top: 72px; left: 0; right: 0; flex-direction: column; align-items: stretch;
+    background: var(--bg-2); padding: 20px; gap: 6px; border-bottom: 1px solid var(--line); max-height: calc(100vh - 72px); overflow-y: auto;
+  }
+  .menu.open { display: flex; }
+  .menu > li > a, .menu > li > button { display: block; padding: 10px 0; width: 100%; text-align: left; }
+  .dropdown-list { position: static; display: block; background: transparent; border: 0; padding: 0 0 0 12px; margin: 0; }
+  .topbar .hot { display: none; }
+}
+@media (max-width: 560px) {
+  section { padding: 64px 0; }
+  .stats { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .stat { padding: 12px; } .stat strong { font-size: 1.4rem; }
+  .batch { padding: 26px; }
+  .foot-grid { grid-template-columns: 1fr; }
+  .float-card { font-size: .8rem; padding: 8px 12px; }
+  .topbar .mail { display: none; }
+  .logo-img { height: 46px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .hero .reveal { opacity: 1; transform: none; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="wrap">
+    <div style="display:flex;gap:18px;">
+      <a href="tel:+94771234567">📞 077 123 4567</a>
+      <a href="mailto:info@swmaths.lk" class="mail">✉️ info@swmaths.lk</a>
+    </div>
+    <span class="hot si">🔥 2027 නව පන්ති දැන් ආරම්භ වේ!</span>
+    <div class="socials">
+      <a href="#" aria-label="Facebook">Facebook</a>
+      <a href="#" aria-label="YouTube">YouTube</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo"><img src="images/logo.png" alt="Ishara Perera – Marine Engineering (University of Moratuwa)" class="logo-img"></a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <ul class="menu" id="menu">
+      <li><a href="#top">Home</a></li>
+      <li class="dropdown">
+        <button aria-haspopup="true">Grades ▾</button>
+        <ul class="dropdown-list" id="gradeMenu"></ul>
+      </li>
+      <li><a href="#timetable">Time Table</a></li>
+      <li><a href="#lessons">Free Lessons</a></li>
+      <li><a href="#store">Store</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#" class="btn small" data-open="register">Student Login</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill reveal si"><span class="dot"></span>2027 නව කණ්ඩායම් ආරම්භයි</span>
+      <h1 class="reveal"><span class="si">SFT සරලව,</span><br><span class="grad">A සාමාර්ථයක් සමඟ.</span></h1>
+      <p class="sub reveal">Advanced Level SFT – Sinhala Medium. Live Classes, Recorded Lessons, Weekly Papers, Model Papers & Printed Tutes delivered to your doorstep.</p>
+      <div class="hero-actions reveal">
+        <button class="btn" data-open="register">Register Now</button>
+        <a href="#timetable" class="btn outline">View Time Table</a>
+      </div>
+      <div class="stats reveal">
+        <div class="stat"><strong data-count="4200">0</strong><span>A passes (2018–2025)</span></div>
+        <div class="stat"><strong data-count="15" data-suffix="+">0</strong><span>District top 10 ranks</span></div>
+        <div class="stat"><strong data-count="11">0</strong><span>Years teaching</span></div>
+      </div>
+    </div>
+
+    <div class="teacher-visual">
+      <div class="teacher-ring">
+        <!-- Teacher photo: images/teacher.png (the drawing below shows only if the photo is missing) -->
+        <svg viewBox="0 0 300 320" aria-hidden="true">
+          <defs><linearGradient id="shirt" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2F7BFF"/><stop offset="1" stop-color="#1E40AF"/></linearGradient></defs>
+          <path d="M40 320 C40 240 90 210 150 210 C210 210 260 240 260 320 Z" fill="url(#shirt)"/>
+          <path d="M128 210 L150 250 L172 210 Z" fill="#E8EEFF"/>
+          <rect x="133" y="175" width="34" height="40" rx="10" fill="#C98A5E"/>
+          <ellipse cx="150" cy="130" rx="56" ry="64" fill="#D99A6C"/>
+          <path d="M94 120 C92 70 120 55 150 55 C185 55 210 72 206 120 C200 95 185 88 150 88 C118 88 100 96 94 120 Z" fill="#1A1A2E"/>
+          <circle cx="128" cy="132" r="5" fill="#1A1A2E"/><circle cx="172" cy="132" r="5" fill="#1A1A2E"/>
+          <path d="M132 160 Q150 174 168 160" stroke="#8A4B2A" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </svg>
+        <img src="images/teacher.png" alt="Ishara Perera" onload="this.previousElementSibling.remove()" onerror="this.remove()">
+      </div>
+      <div class="float-card fc-1"><span class="ic">🏆</span><div><b>98%</b>pass rate 2025</div></div>
+      <div class="float-card fc-2"><span class="ic">👨‍🎓</span><div><b>3,500+</b>students online</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track si" id="marquee"></div>
+</div>
+
+<!-- ============ NEW BATCH ============ -->
+<section>
+  <div class="wrap">
+    <div class="batch">
+      <div>
+        <span class="kicker">New batch open</span>
+        <h2 class="si">2027 A/L නව පන්ති ආරම්භ වන දින</h2>
+        <p style="color:var(--muted)">Seats are limited in every centre. Register early to get the first month's tute pack free.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn" data-open="register">Register Now</button>
+          <a href="https://wa.me/94771234567" class="btn wa">WhatsApp</a>
+        </div>
+      </div>
+      <ul class="batch-list" id="batchList"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIMETABLE ============ -->
+<section id="timetable" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Time table</span>
+      <h2 class="si">පන්ති කාලසටහන</h2>
+      <p>Choose your grade to see all physical and online class times.</p>
+    </div>
+    <div class="filter-tabs" role="tablist" id="ttTabs"></div>
+    <div class="tt-grid" id="ttGrid"></div>
+    <p class="tt-note">Online classes are held on Zoom. Recordings are uploaded within 24 hours.</p>
+  </div>
+</section>
+
+<!-- ============ FREE LESSONS ============ -->
+<section id="lessons">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Tutorials</span>
+      <h2>Free Video Lessons</h2>
+      <p>Free SFT lessons for every batch. Tap a video to watch it.</p>
+    </div>
+    <div class="filter-tabs" role="tablist" id="lessonTabs"></div>
+    <div class="video-grid" id="videoGrid"></div>
+  </div>
+</section>
+
+<!-- ============ STORE ============ -->
+<section id="store" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Online store</span>
+      <h2>Tutes &amp; Books</h2>
+      <p class="si">අවශ්‍ය සියලුම පොත් එකම තැනකින්. නිවසටම ගෙන්වා ගන්න.</p>
+    </div>
+    <div class="store-grid" id="storeGrid"></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-img">
+      <svg viewBox="0 0 300 320" aria-hidden="true">
+        <path d="M40 320 C40 240 90 210 150 210 C210 210 260 240 260 320 Z" fill="#2F7BFF"/>
+        <rect x="133" y="175" width="34" height="40" rx="10" fill="#C98A5E"/>
+        <ellipse cx="150" cy="130" rx="56" ry="64" fill="#D99A6C"/>
+        <path d="M94 120 C92 70 120 55 150 55 C185 55 210 72 206 120 C200 95 185 88 150 88 C118 88 100 96 94 120 Z" fill="#1A1A2E"/>
+      </svg>
+      <!-- About photo: images/about.png -->
+      <img src="images/about.png" alt="Ishara Perera" onload="this.previousElementSibling.remove()" onerror="this.remove()">
+    </div>
+    <div>
+      <span class="kicker">Our story</span>
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800">About Ishara Perera</h2>
+      <p style="color:var(--muted)">වේයන්ගොඩ බණ්ඩාරනායක ජාතික පාසලෙ න් මූලික අද්‍යාපනය හදාරා 
+උසස්පෙළ ගණිත අංශයෙන් මොරටුව විශ්ව විද්‍යාලයේ "නාවික ඉංජිනේරු පීඨයට" තේරීපත් වී 
+එයද සාර්ථකව අවසන් කරමින් 
+පූර්ණ කාලීන උපකාරක පන්ති ගුරුවරයෙකු ලෙස වසර ගණනාවක අත්දැකීම් සහිතව ප්‍රදාන නගර කීපයක සහ Online හරහා SFT විෂය ඉගැන්වීම් සිදුකරයි.
+
+අපගේ විශේෂත්වය වන්නේ ඕනෑම මට්ටමට සිටින දරුවෙකුට SFT විෂය තේරුම්ගත හැකිවන පරිදි ඉගැන්වීමට ඇති හැකියාවයි.
+
+සෑම වසරකම අපගේ විශිෂ්ට ප්‍රතිඵල ලේඛන ඒ බව සනාත කරයි.
+
+"අනාගත තාක්ෂණවේදීන්ගේ වර්තමාන SFT ගුරු පෞර්ෂය"
+</p>
+      <ul class="check-list">
+        <li>Syllabus completed three months before the exam</li>
+        <li>Weekly paper with marks shared to parents</li>
+        <li>Printed tutes delivered island-wide</li>
+        <li>Recordings available for the full year</li>
+      </ul>
+      <button class="btn" data-open="register">Join the class</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section id="results" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Results</span>
+      <h2>Our Students' Results</h2>
+      <p>A few of the students who earned an A in O/L Mathematics.</p>
+    </div>
+    <div class="results-grid" id="resultsGrid"></div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section>
+  <div class="wrap">
+    <div class="cta">
+      <h2 class="si">ඔබේ A සාමාර්ථය අදම ආරම්භ කරන්න.</h2>
+      <p>Call or WhatsApp us to join a class this week.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a href="https://wa.me/94789945430" class="btn wa">Chat on WhatsApp</a>
+        <a href="tel:+94789945430" class="btn" style="background:#03122E">Call 078 118 4365</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#top" class="logo"><img src="images/logo.png" alt="Ishara Perera" class="logo-img foot-logo"></a>
+        <p style="margin-top:14px">Grade 6–11 Mathematics, taught step by step with weekly papers and full recordings.</p>
+      </div>
+      <div><h4>Links</h4><ul><li><a href="#timetable">Time Table</a></li><li><a href="#lessons">Free Lessons</a></li><li><a href="#store">Store</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="tel:+94771234567">077 123 4567</a></li><li><a href="mailto:info@swmaths.lk">info@swmaths.lk</a></li><li>Colombo, Sri Lanka</li></ul></div>
+      <div><h4>Follow</h4><ul><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">TikTok</a></li></ul></div>
+    </div>
+    <div class="copy"><span>© <span id="year"></span> SW Maths Academy. All rights reserved.</span><span>Terms · Privacy · Refund Policy</span></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/94771234567" class="wa-float" aria-label="Chat on WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg>
+</a>
+<button class="cart-fab" id="cartFab">🛒 Cart <span class="cart-count" id="cartCount">0</span></button>
+
+<!-- ============ DIALOGS ============ -->
+<dialog id="lessonDlg"><div class="dlg"><button class="dlg-close" data-close>×</button><div id="lessonBody"></div></div></dialog>
+
+<dialog id="registerDlg">
+  <div class="dlg">
+    <button class="dlg-close" data-close>×</button>
+    <h3 style="font-size:1.5rem">Register for a class</h3>
+    <p style="color:var(--muted)">We'll contact you on WhatsApp to confirm your seat.</p>
+    <form id="regForm" novalidate>
+      <div class="field"><label for="rName">Student name</label><input id="rName" autocomplete="name"><span class="err" id="rNameErr"></span></div>
+      <div class="field"><label for="rPhone">WhatsApp number</label><input id="rPhone" type="tel" placeholder="07X XXX XXXX" autocomplete="tel"><span class="err" id="rPhoneErr"></span></div>
+      <div class="field"><label for="rClass">Class</label><select id="rClass"><option value="">Select a class</option></select><span class="err" id="rClassErr"></span></div>
+      <button type="submit" class="btn" style="width:100%">Send via WhatsApp</button>
+    </form>
+  </div>
+</dialog>
+
+<dialog id="cartDlg">
+  <div class="dlg">
+    <button class="dlg-close" data-close>×</button>
+    <h3 style="font-size:1.5rem">Your cart</h3>
+    <div id="cartItems"></div>
+    <div style="display:flex;justify-content:space-between;margin:18px 0;font-size:1.2rem;font-weight:800"><span>Total</span><span id="cartTotal"></span></div>
+    <button class="btn wa" style="width:100%" id="orderBtn">Order via WhatsApp</button>
+  </div>
+</dialog>
+
+<script>
+/* =========================================================
+   EDIT YOUR CONTENT HERE
+   ========================================================= */
+const WHATSAPP = "94771234567";   // your WhatsApp number (country code, no +)
+
+const GRADES = ["2027 A/L", "2028 A/L","10"];
+const GRADE_COLORS = {
+  "2027 A/L": "linear-gradient(135deg,#7C3AED,#2F7BFF)", "07": "linear-gradient(135deg,#0EA5E9,#22D3EE)",
+  "2028 A/L": "linear-gradient(135deg,#059669,#22D3EE)", "09": "linear-gradient(135deg,#F59E0B,#EF4444)",
+  "10": "linear-gradient(135deg,#2F7BFF,#1E3A8A)", "11": "linear-gradient(135deg,#E11D48,#7C3AED)"
+};
+
+const CLASSES = [
+  { grade:"06", medium:"Theory", title:"2027 A/L", lessons:260, price:1500, day:"ඉරිදා සවස 3.30" },
+  { grade:"07", medium:"Revision", title:"2027 A/L", lessons:275, price:1500, day:"සඳුදා සවස 5.30" },
+  { grade:"08", medium:"Theory", title:"2028 A/L", lessons:290, price:1800, day:"අඟහරුවාදා සවස 5.30" },
+];
+
+const NEW_BATCH = [
+  { place:"Online (Zoom)",  date:"Oct 05 (Sunday) – 8.00 a.m." },
+  { place:"Colombo",        date:"Oct 06 (Monday) – 3.30 p.m." },
+  { place:"Gampaha",        date:"Oct 08 (Wednesday) – 2.30 p.m." },
+  { place:"Kurunegala",     date:"Oct 10 (Friday) – 3.00 p.m." },
+  { place:"Kandy",          date:"Oct 11 (Saturday) – 8.00 a.m." }
+];
+
+// Timetable: one list per grade. online:true shows the online icon.
+const TIMETABLE = {
+  "2027 A/L": [ { place:"Online (Zoom)", day:"Sunday", time:"3.30 p.m – 5.30 p.m", online:true },
+          { place:"Colombo – Main Hall", day:"Saturday", time:"8.00 a.m – 10.00 a.m" } ],
+  "2028 A/L": [ { place:"Online (Zoom)", day:"Monday", time:"5.30 p.m – 7.30 p.m", online:true },
+          { place:"Gampaha", day:"Saturday", time:"10.30 a.m – 12.30 p.m" } ],
+  "08": [ { place:"Online (Zoom)", day:"Tuesday", time:"5.30 p.m – 7.30 p.m", online:true },
+          { place:"Colombo – Main Hall", day:"Sunday", time:"10.30 a.m – 12.30 p.m" } ],
+  "09": [ { place:"Online (Zoom)", day:"Wednesday", time:"6.00 p.m – 8.00 p.m", online:true },
+          { place:"Kurunegala", day:"Friday", time:"3.00 p.m – 5.00 p.m" },
+          { place:"Gampaha", day:"Sunday", time:"1.30 p.m – 3.30 p.m" } ],
+  "10": [ { place:"Online (Zoom)", day:"Thursday", time:"6.00 p.m – 8.30 p.m", online:true },
+          { place:"Colombo – Main Hall", day:"Saturday", time:"2.00 p.m – 4.30 p.m" },
+          { place:"Kandy", day:"Saturday", time:"8.00 a.m – 10.30 a.m" },
+          { place:"Gampaha", day:"Sunday", time:"8.00 a.m – 10.30 a.m" } ],
+  "11": [ { place:"Online (Zoom)", day:"Friday", time:"6.30 p.m – 9.00 p.m", online:true },
+          { place:"Online Revision (English)", day:"Sunday", time:"8.00 a.m – 11.00 a.m", online:true },
+          { place:"Colombo – Main Hall", day:"Sunday", time:"1.00 p.m – 4.00 p.m" },
+          { place:"Kurunegala", day:"Saturday", time:"1.00 p.m – 4.00 p.m" },
+          { place:"Kandy", day:"Sunday", time:"8.00 a.m – 11.00 a.m" } ]
+};
+
+// FREE LESSONS
+// youtube: paste the full YouTube link. The video plays inside the popup.
+// img:     your own thumbnail in images/lessons/. If you leave img empty,
+//          the YouTube thumbnail is used automatically.
+const LESSONS = [
+  { grade:"2027 A/L", title:"චලිතය (Motion & Kinematics)", img:"images/lessons/motion.jpg",
+    youtube:"", dur:"24:10", views:"12K",
+    points:["Distance, displacement and speed","Velocity–time graphs","Equations of motion","Past paper questions"] },
+  { grade:"2027 A/L", title:"ධාරා විද්‍යුතය (Current Electricity)", img:"images/lessons/electricity.jpg",
+    youtube:"", dur:"31:45", views:"9.8K",
+    points:["Current, voltage and resistance","Ohm's law","Series and parallel circuits","Electrical power and energy"] },
+  { grade:"2027 A/L", title:"පරමාණුක ව්‍යුහය (Atomic Structure)", img:"images/lessons/atomic-structure.jpg",
+    youtube:"", dur:"27:20", views:"8.1K",
+    points:["Protons, neutrons and electrons","Electron configuration","Isotopes","The periodic table"] },
+  { grade:"2027 A/L", title:"2025 A/L SFT Paper Discussion", img:"images/lessons/past-paper-2025.jpg",
+    youtube:"", dur:"1:12:00", views:"21K",
+    points:["MCQ section","Structured essay questions","Common mistakes","Time management tips"] },
+  { grade:"2028 A/L", title:"සෛලය (The Cell & Cell Division)", img:"images/lessons/cell-biology.jpg",
+    youtube:"", dur:"22:30", views:"6.4K",
+    points:["Plant and animal cells","Cell organelles","Mitosis","Meiosis"] },
+  { grade:"2028 A/L", title:"ඒකක හා මිනුම් (Units & Measurement)", img:"images/lessons/units-measurement.jpg",
+    youtube:"", dur:"18:40", views:"7.2K",
+    points:["SI base units","Derived units","Measuring instruments","Errors in measurement"] }
+];
+
+// ONLINE STORE
+// img: book cover in images/books/ (3:4 size, e.g. 600x800)
+const BOOKS = [
+  { img:"images/books/sft-theory.jpg",   title:"SFT Theory Book",       sub:"2027 A/L", price:1800, color:"linear-gradient(160deg,#2F7BFF,#1E3A8A)" },
+  { img:"images/books/mcq-1000.jpg",     title:"SFT 1000 MCQ",          sub:"2027 A/L", price:1500, color:"linear-gradient(160deg,#E11D48,#7C3AED)" },
+  { img:"images/books/model-papers.jpg", title:"Model Paper Pack",      sub:"2027 A/L", price:1200, color:"linear-gradient(160deg,#059669,#0EA5E9)" },
+  { img:"images/books/short-notes.jpg",  title:"SFT Short Notes",       sub:"2028 A/L", price:900,  color:"linear-gradient(160deg,#7C3AED,#8B5CF6)" }
+];
+
+const RESULTS = [
+  { img:"images/students/tharushi.jpg", name:"Tharushi Perera",  school:"Visakha Vidyalaya", year:"2025 O/L", quote:"The weekly papers showed me exactly which units to revise." },
+  { img:"images/students/kavindu.jpg", name:"Kavindu Silva",    school:"Royal College",     year:"2025 O/L", quote:"I watched every recording twice before the exam. It really worked." },
+  { img:"images/students/nethmi.jpg", name:"Nethmi Fernando",  school:"Online student",    year:"2024 O/L", quote:"I joined online from Badulla and never felt left behind." },
+  { img:"images/students/dinuka.jpg", name:"Dinuka Rajapaksha",school:"St. Joseph's College", year:"2024 O/L", quote:"Trigonometry finally made sense after the step-by-step method." }
+];
+
+/* =========================================================
+   CODE BELOW – no need to edit
+   ========================================================= */
+const $ = (id) => document.getElementById(id);
+const lkr = (n) => "LKR " + n.toLocaleString("en-LK");
+// Shows a photo from the images folder. If the file is missing, the coloured design shows instead.
+const pic = (src, alt = "") => src
+  ? `<img class="pic" src="${src}" alt="${alt}" loading="lazy" onload="this.parentElement.classList.add('has-img')" onerror="this.remove()">`
+  : "";
+// Gets the video ID from any YouTube link (watch, youtu.be, shorts, embed)
+const ytId = (url) => {
+  if (!url) return "";
+  const m = url.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);
+  return m ? m[1] : (/^[\w-]{11}$/.test(url) ? url : "");
+};
+// Thumbnail: your own image first, otherwise the YouTube thumbnail
+const lessonThumb = (l) => l.img || (ytId(l.youtube) ? `https://img.youtube.com/vi/${ytId(l.youtube)}/hqdefault.jpg` : "");
+const initials = (name) => name.split(" ").map(w => w[0]).join("").slice(0, 2);
+
+/* ---------- Grade dropdown & marquee ---------- */
+$("gradeMenu").innerHTML = GRADES.map(g => `<li><a href="#timetable" data-grade="${g}">${g}</a></li>`).join("");
+$("gradeMenu").addEventListener("click", (e) => {
+  const g = e.target.dataset.grade;
+  if (g) { ttGrade = g; renderTimetable(); }
+});
+const marqueeText = ["Advanced Level SFT – Sinhala Medium", "Live Classes", "Recorded Lessons", "Weekly Papers", "Model Papers", "Printed Tutes Delivered to Your Home"];
+$("marquee").innerHTML = [...marqueeText, ...marqueeText].map(t => `<span>✦ ${t}</span>`).join("");
+
+/* ---------- Tabs helper ---------- */
+function makeTabs(el, options, current, onPick) {
+  el.innerHTML = options.map(([value, label]) =>
+    `<button class="tab" role="tab" data-v="${value}" aria-selected="${value === current}">${label}</button>`).join("");
+  el.onclick = (e) => { const b = e.target.closest(".tab"); if (b) onPick(b.dataset.v); };
+}
+
+/* ---------- New batch ---------- */
+$("batchList").innerHTML = NEW_BATCH.map(b => `<li><span>📍 ${b.place}</span><b>${b.date}</b></li>`).join("");
+
+/* ---------- Timetable ---------- */
+let ttGrade = GRADES[0];   // first tab is selected when the page opens
+function renderTimetable() {
+  makeTabs($("ttTabs"), GRADES.map(g => [g, `${g}`]), ttGrade, (v) => { ttGrade = v; renderTimetable(); });
+  $("ttGrid").innerHTML = TIMETABLE[ttGrade].map(t => `
+    <div class="tt-card ${t.online ? "online" : ""}">
+      <div class="tt-icon">${t.online ? "💻" : "🏫"}</div>
+      <div><h4>${t.place}</h4><div class="when">${t.day}</div><div class="where">${t.time}</div></div>
+    </div>`).join("");
+}
+
+/* ---------- Free lessons ---------- */
+let lessonGrade = "All";
+function renderLessons() {
+  makeTabs($("lessonTabs"), [["All","All"], ...GRADES.map(g => [g, g])], lessonGrade,
+    (v) => { lessonGrade = v; renderLessons(); });
+  const list = LESSONS.filter(l => lessonGrade === "All" || l.grade === lessonGrade);
+  $("videoGrid").innerHTML = list.length ? list.map(l => `
+    <button class="video" data-lesson="${LESSONS.indexOf(l)}" aria-label="Open lesson: ${l.title}">
+      <div class="thumb" style="--b:${GRADE_COLORS[l.grade] || "var(--grad)"}">
+        ${pic(lessonThumb(l), l.title)}
+        <span class="t si">${l.title}</span><span class="play"></span><span class="dur">${l.dur}</span>
+      </div>
+      <div class="video-info"><h4 class="si">${l.title}</h4><span>${l.grade} · ${l.views} views</span></div>
+    </button>`).join("")
+    : `<p style="grid-column:1/-1;text-align:center;color:var(--muted)">No free lessons for this batch yet. Check back next week.</p>`;
+}
+$("videoGrid").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-lesson]");
+  if (!b) return;
+  const l = LESSONS[b.dataset.lesson];
+  const id = ytId(l.youtube);
+  // With a YouTube link the video plays here; without one, the thumbnail is shown
+  const media = id
+    ? `<div class="player"><iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0" title="${l.title}"
+         allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>`
+    : `<div class="thumb" style="--b:${GRADE_COLORS[l.grade] || "var(--grad)"};border-radius:14px;margin-bottom:18px;overflow:hidden">
+         ${pic(lessonThumb(l), l.title)}<span class="soon">Video coming soon</span></div>`;
+  $("lessonBody").innerHTML = `
+    ${media}
+    <h3 class="si" style="font-size:1.4rem">${l.title}</h3>
+    <p style="color:var(--muted)">${l.grade} · ${l.dur}</p>
+    <h4>In this lesson</h4><ol>${l.points.map(p => `<li>${p}</li>`).join("")}</ol>
+    ${id ? `<a href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener" class="btn" style="width:100%;margin-top:10px">Watch on YouTube</a>` : ""}`;
+  $("lessonDlg").showModal();
+});
+// Stop the video when the popup closes
+$("lessonDlg").addEventListener("close", () => { $("lessonBody").innerHTML = ""; });
+
+/* ---------- Store & cart ---------- */
+const cart = {};
+$("storeGrid").innerHTML = BOOKS.map((b, i) => `
+  <div class="book">
+    <div class="cover" style="--b:${b.color}">${pic(b.img, b.title)}<small>Ishara Perera</small><b class="si">${b.title}</b><small>${b.sub}</small></div>
+    <h4 class="si">${b.title}</h4>
+    <span class="book-sub">${b.sub}</span>
+    <div class="price">${lkr(b.price)}</div>
+    <button class="btn small" data-add="${i}">Add to cart</button>
+  </div>`).join("");
+
+function updateCart() {
+  const ids = Object.keys(cart);
+  const count = ids.reduce((s, i) => s + cart[i], 0);
+  $("cartCount").textContent = count;
+  $("cartFab").classList.toggle("show", count > 0);
+  $("cartItems").innerHTML = ids.length ? ids.map(i => `
+    <div class="cart-item">
+      <span class="si">${BOOKS[i].title}</span>
+      <div class="qty"><button data-dec="${i}" aria-label="Remove one">−</button>${cart[i]}<button data-inc="${i}" aria-label="Add one">+</button></div>
+      <b>${lkr(BOOKS[i].price * cart[i])}</b>
+    </div>`).join("") : `<p style="color:var(--muted)">Your cart is empty. Add a book from the store.</p>`;
+  $("cartTotal").textContent = lkr(ids.reduce((s, i) => s + BOOKS[i].price * cart[i], 0));
+}
+$("storeGrid").addEventListener("click", (e) => {
+  const i = e.target.dataset.add;
+  if (i === undefined) return;
+  cart[i] = (cart[i] || 0) + 1;
+  e.target.textContent = "Added ✓";
+  setTimeout(() => e.target.textContent = "Add to cart", 1200);
+  updateCart();
+});
+$("cartItems").addEventListener("click", (e) => {
+  const inc = e.target.dataset.inc, dec = e.target.dataset.dec;
+  if (inc !== undefined) cart[inc]++;
+  if (dec !== undefined) { cart[dec]--; if (cart[dec] <= 0) delete cart[dec]; }
+  updateCart();
+});
+$("cartFab").addEventListener("click", () => $("cartDlg").showModal());
+$("orderBtn").addEventListener("click", () => {
+  const ids = Object.keys(cart);
+  if (!ids.length) return;
+  const lines = ids.map(i => `${BOOKS[i].title} x${cart[i]}`).join("\n");
+  const msg = `Hello, I'd like to order:\n${lines}\nTotal: ${$("cartTotal").textContent}`;
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
+});
+
+/* ---------- Results ---------- */
+$("resultsGrid").innerHTML = RESULTS.map((r, i) => `
+  <div class="result">
+    <div class="result-top">
+      <div class="avatar" style="--b:${Object.values(GRADE_COLORS)[i % 6]}"><span>${initials(r.name)}</span>${pic(r.img, r.name)}</div>
+      <div><b>${r.name}</b><span>${r.school} · ${r.year}</span></div>
+      <span class="grade-a">A</span>
+    </div>
+    <p>"${r.quote}"</p>
+  </div>`).join("");
+
+/* ---------- Register dialog ---------- */
+$("rClass").innerHTML += CLASSES.map(c => `<option>${c.title} (${c.medium})</option>`).join("");
+document.addEventListener("click", (e) => {
+  const opener = e.target.closest("[data-open='register']");
+  if (opener) {
+    e.preventDefault();
+    const cls = opener.dataset.class;
+    if (cls) [...$("rClass").options].forEach(o => { if (o.text.startsWith(cls)) o.selected = true; });
+    $("registerDlg").showModal();
+    $("menu").classList.remove("open");
+  }
+  if (e.target.matches("[data-close]")) e.target.closest("dialog").close();
+  if (e.target.tagName === "DIALOG") e.target.close();   // click outside closes
+});
+$("regForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const rules = [
+    ["rName",  v => v.length >= 2, "Enter the student's name."],
+    ["rPhone", v => /^0\d{9}$/.test(v.replace(/\s/g, "")), "Enter a 10-digit number starting with 0."],
+    ["rClass", v => v !== "", "Choose a class."]
+  ];
+  let ok = true;
+  rules.forEach(([id, test, msg]) => {
+    const valid = test($(id).value.trim());
+    $(id + "Err").textContent = valid ? "" : msg;
+    if (!valid) ok = false;
+  });
+  if (!ok) return;
+  const msg = `Hello, I'd like to register.\nName: ${$("rName").value}\nPhone: ${$("rPhone").value}\nClass: ${$("rClass").value}`;
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank");
+  $("registerDlg").close();
+  e.target.reset();
+});
+
+/* ---------- Mobile menu ---------- */
+$("burger").addEventListener("click", () => {
+  const open = $("menu").classList.toggle("open");
+  $("burger").setAttribute("aria-expanded", open);
+});
+$("menu").addEventListener("click", (e) => { if (e.target.tagName === "A") $("menu").classList.remove("open"); });
+
+/* ---------- Count-up stats ---------- */
+function countUp() {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll("[data-count]").forEach(el => {
+    const target = +el.dataset.count, suffix = el.dataset.suffix || "+";
+    if (reduce) { el.textContent = target.toLocaleString() + suffix; return; }
+    const start = performance.now(), dur = 1600;
+    const tick = (now) => {
+      const p = Math.min((now - start) / dur, 1);
+      el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 3))).toLocaleString() + (p === 1 ? suffix : "");
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
+/* ---------- Start ---------- */
+$("year").textContent = new Date().getFullYear();
+renderTimetable();
+renderLessons();
+updateCart();
+setTimeout(countUp, 400);
+</script>
+</body>
+</html>
